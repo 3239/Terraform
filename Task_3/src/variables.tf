@@ -43,8 +43,8 @@ variable "subnets" {
 }
 
 variable "vpc_name" {
-  type        = string
-  default     = "develop"
+  type = string
+  default = "develop"
   description = "VPC network&subnet name"
 }
 
@@ -62,26 +62,26 @@ variable "vm_platform_id" {
 
 variable "each_vm" {
   type = list(object({
-    vm_name     = string
-    cpu         = number
-    ram         = number
+    vm_name = string
+    cpu = number
+    ram = number
     disk_volume = number
-    subnet_key  = string
+    subnet_key = string
   }))
   default = [
     {
-      vm_name     = "main"
-      cpu         = 2
-      ram         = 2
+      vm_name = "main"
+      cpu = 2
+      ram = 2
       disk_volume = 11
-      subnet_key  = "d"
+      subnet_key = "d"
     },
     {
-      vm_name     = "replica"
-      cpu         = 2
-      ram         = 1
+      vm_name = "replica"
+      cpu = 2
+      ram = 1
       disk_volume = 10
-      subnet_key  = "e"
+      subnet_key = "e"
     }
   ]
 }
@@ -102,7 +102,47 @@ variable "vm_resource" {
       disk_size = 10
       disk_type = "network-hdd"
     }
+    storage = {
+      cores = 2
+      memory = 2
+      core_fraction = 20
+      disk_size = 10
+      disk_type = "network-ssd"
+    }
   }
+}
+
+variable "storage_disk_resource" {
+  type = map(object({
+    disk_size = number
+    disk_type = string
+  }))
+  default = {
+    count = {
+      disk_size = 1
+      disk_type = "network-hdd"
+    }
+  }
+}
+
+variable "storage_vm_name" {
+  type    = string
+  default = "storage"
+}
+
+variable "storage_subnet_key" {
+  type    = string
+  default = "a"
+}
+
+variable "storage_disk_count" {
+  type    = number
+  default = 3
+}
+
+variable "storage_disk_name_prefix" {
+  type    = string
+  default = "storage-disk"
 }
 
 variable "vm_preemptible" {
